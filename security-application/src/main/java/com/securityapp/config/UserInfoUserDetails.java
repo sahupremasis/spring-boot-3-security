@@ -1,6 +1,7 @@
 package com.securityapp.config;
 
 import com.securityapp.entity.UserInfo;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Log4j2
 public class UserInfoUserDetails implements UserDetails {
 
     private String name;
@@ -22,6 +24,7 @@ public class UserInfoUserDetails implements UserDetails {
         authorities= Arrays.stream(userInfo.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+        log.info("name: {}, authorities: {}", name, authorities);
     }
 
     @Override

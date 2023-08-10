@@ -44,6 +44,11 @@ public class ProductController {
         return service.getProduct(id);
     }
 
+    @GetMapping("/any")
+    public Product getAnyProduct() {
+        return service.getProducts().get(0);
+    }
+
     @PostMapping("/authenticate")
     public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
 

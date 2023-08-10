@@ -1,8 +1,6 @@
 package com.securityapp.config;
 
 import com.securityapp.entity.UserInfo;
-import com.securityapp.repository.UserInfoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,14 +11,15 @@ import java.util.Optional;
 @Component
 public class UserInfoUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserInfoRepository repository;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserInfo> userInfo = repository.findByName(username);
-        return userInfo.map(UserInfoUserDetails::new)
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(1000);
+        userInfo.setName(username);
+        userInfo.setEmail(username + "@example.com");
+        userInfo.setRoles("ROLE_ADMIN");
+        Optional<UserInfo> userInfoOptional = Optional.of(userInfo);
+        return userInfoOptional.map(UserInfoUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found " + username));
-
     }
 }
